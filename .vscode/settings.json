@@ -56,5 +56,5 @@
         "temp/": true,
         "Temp/": true
     },
-    "dotnet.defaultSolution": "Gravity Bender.sln"
+    "dotnet.defaultSolution": "gravity-bender.sln"
 }
