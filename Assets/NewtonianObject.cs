@@ -10,6 +10,7 @@ public class NewtonianObject : MonoBehaviour
     float G;
 
     public bool attractObjects = false;
+    public bool active = true;
 
     public static List<NewtonianObject> newtonianObjects;
 
@@ -38,7 +39,7 @@ public class NewtonianObject : MonoBehaviour
     }
 
     void FixedUpdate() {
-        AttractToObjects();
+        if (active) AttractToObjects();
     }
 
     void AttractToObjects() {

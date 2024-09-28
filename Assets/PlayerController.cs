@@ -2,23 +2,36 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(NewtonianObject))]
+[RequireComponent(typeof(Rigidbody))]
 public class PlayerController : MonoBehaviour
 {
-    
+    public bool useNewtonianPhysics = false;
+
+    float camX, camY;
+
     public float speed = 10f;
     public float mouseSensitivity = 100f;
 
     Rigidbody rb;
-    Camera camera;
+    Camera playerCamera;
+    NewtonianObject playerGravity;
     
-    // Start is called before the first frame update
+    
+    void Awake() {
+        rb = GetComponent<Rigidbody>();
+        playerCamera = GetComponentInChildren<Camera>();
+        playerGravity = GetComponent<NewtonianObject>();
+    }
+    
     void Start()
     {
-        rb = GetComponent<Rigidbody>();
-        camera = GetComponentInChildren<Camera>();
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
+        playerGravity.active = useNewtonianPhysics;
+        rb.useGravity = !useNewtonianPhysics;
     }
 
-    // Update is called once per frame
     void Update()
     {
         Look();
@@ -34,13 +47,16 @@ public class PlayerController : MonoBehaviour
 
         Vector3 movement = new Vector3(x, 0.0f, y).normalized;
         
-        rb.AddForce(movement * speed * Time.deltaTime);
+        rb.AddRelativeForce(movement * speed * Time.deltaTime);
     }
 
     void Look() {
-        float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity * Time.fixedDeltaTime;
-        float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.fixedDeltaTime;
+        camX -= Input.GetAxis("Mouse Y") * mouseSensitivity * Time.fixedDeltaTime;
+        camX = Mathf.Clamp(camX, -90f, 90f);
+        camY = Input.GetAxis("Mouse X") * mouseSensitivity * Time.fixedDeltaTime;
 
-        
+        playerCamera.transform.localRotation = Quaternion.Euler(camX, 0, 0);
+
+        transform.Rotate(0, camY, 0);
     }
 }
