@@ -10,14 +10,20 @@ public class PlayerController : MonoBehaviour
 
     float camX, camY;
 
-    public float speed = 10f;
+    public float movementForce = 10f;
+    public float maxSpeed = 20f;
+    public float jumpForce = 10f;
     public float mouseSensitivity = 100f;
+
+    private float movementMultipler = 10f;
+    private float jumpMultiplier = 10f;
 
     Rigidbody rb;
     Camera playerCamera;
     NewtonianObject playerGravity;
     
-    
+    bool grounded;
+
     void Awake() {
         rb = GetComponent<Rigidbody>();
         playerCamera = GetComponentInChildren<Camera>();
@@ -38,16 +44,46 @@ public class PlayerController : MonoBehaviour
     }
 
     void FixedUpdate() {
-        Movement();
+        HandleMovement();
+        HandleJumping();
     }
 
-    void Movement() {
+    void OnCollisionStay(Collision other) {
+        if (other.gameObject.layer == LayerMask.NameToLayer("Environment")) {
+            grounded = true;
+        }
+    }
+
+    void OnCollisionExit(Collision other) {
+        if (other.gameObject.layer == LayerMask.NameToLayer("Environment")) {
+            grounded = false;
+        }
+    }
+
+    void HandleMovement() {
+        float currentSpeed = rb.velocity.magnitude;
+        if (currentSpeed > maxSpeed) {
+            Debug.Log("Too fast boiii");
+            return;
+        }
+        
         float x = Input.GetAxis("Horizontal");
         float y = Input.GetAxis("Vertical");
 
-        Vector3 movement = new Vector3(x, 0.0f, y).normalized;
+        Vector3 movementDir = new Vector3(x, 0.0f, y).normalized;
         
-        rb.AddRelativeForce(movement * speed * Time.deltaTime);
+        float airMult = 1;
+        if (!grounded) {
+            airMult = 0.5f;
+        }
+
+        rb.AddRelativeForce(movementDir * movementForce * movementMultipler * airMult * Time.deltaTime);
+    }
+
+    void HandleJumping() {
+        if (grounded && Input.GetButtonDown("Jump")) {
+            rb.AddForce(transform.up * jumpForce * jumpMultiplier, ForceMode.Impulse);
+        }
     }
 
     void Look() {

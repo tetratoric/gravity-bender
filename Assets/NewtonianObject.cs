@@ -5,6 +5,7 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody))]
 public class NewtonianObject : MonoBehaviour
 {
+    [HideInInspector]
     public Rigidbody rb;
 
     float G;
