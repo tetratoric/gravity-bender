@@ -9,6 +9,7 @@ public enum MovementMode { Normal, Planetry}
 [RequireComponent(typeof(Rigidbody))]
 public class PlayerController : MonoBehaviour
 {
+    public MovementMode movementMode;
     public bool useGravitationalPhysics = false;
 
     float camX, camY;
@@ -17,6 +18,10 @@ public class PlayerController : MonoBehaviour
     public float maxSpeed = 20f;
     public float counterMovementMagnitude = 10f;
     public float jumpForce = 10f;
+    public float jumpCooldown = 0.25f;
+    public float groundingRaycastDistance = 1.55f;
+    public LayerMask groundLayer;
+
     public float mouseSensitivity = 100f;
 
     private float movementMultipler = 10f;
@@ -27,9 +32,8 @@ public class PlayerController : MonoBehaviour
     NewtonianObject playerGravity;
     OrbitingObject playerOrbital;
 
-    public MovementMode currentMode;
 
-    bool grounded;
+    bool grounded, readyToJump = true;
 
     void Awake() {
         rb = GetComponent<Rigidbody>();
@@ -50,6 +54,7 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         Look();
+        CheckIfGrounded();
         Debug.Log("Grounded: " + grounded);
     }
 
@@ -60,21 +65,41 @@ public class PlayerController : MonoBehaviour
         HandleJumping();
     }
 
-    void OnCollisionStay(Collision other) {
-        if (other.gameObject.layer == LayerMask.NameToLayer("Environment")) {
-            grounded = true;
-        }
-    }
 
-    void OnCollisionExit(Collision other) {
-        if (other.gameObject.layer == LayerMask.NameToLayer("Environment")) {
+    void CheckIfGrounded() {
+        RaycastHit hit;
+
+        Vector3 rayDirection;
+        if (movementMode == MovementMode.Planetry) {
+            rayDirection = -(transform.position - playerOrbital.primaryBody.transform.position).normalized;
+        } else {
+            rayDirection = Vector3.down;
+        }
+
+        if (Physics.Raycast(transform.position, rayDirection, out hit, groundingRaycastDistance, groundLayer)) {
+            grounded = true;
+        } else {
             grounded = false;
         }
+
+        Debug.DrawRay(transform.position, rayDirection * groundingRaycastDistance, Color.red);
     }
+
+    // void OnCollisionStay(Collision other) {
+    //     if (other.gameObject.layer == LayerMask.NameToLayer("Environment")) {
+    //         grounded = true;
+    //     }
+    // }
+
+    // void OnCollisionExit(Collision other) {
+    //     if (other.gameObject.layer == LayerMask.NameToLayer("Environment")) {
+    //         grounded = false;
+    //     }
+    // }
 
     void HandleMovement() {
         float currentSpeed = rb.velocity.magnitude;
-        if (currentSpeed > maxSpeed && currentMode == MovementMode.Normal) {
+        if (currentSpeed > maxSpeed && movementMode == MovementMode.Normal) {
             return;
         }
         
@@ -94,7 +119,7 @@ public class PlayerController : MonoBehaviour
     void HandleCounterMovement() {
         if (!grounded) return;
 
-        switch (currentMode) {
+        switch (movementMode) {
             case MovementMode.Normal:
                 Vector3 normLocalVelocity = transform.InverseTransformDirection(rb.velocity);
                 
@@ -126,9 +151,16 @@ public class PlayerController : MonoBehaviour
     }
 
     void HandleJumping() {
-        if (grounded && Input.GetButtonDown("Jump")) {
+        if (grounded && readyToJump && Input.GetButtonDown("Jump")) {
+            readyToJump = false;
             rb.AddForce(transform.up * jumpForce * jumpMultiplier, ForceMode.Impulse);
+
+            Invoke(nameof(ResetJump), jumpCooldown);
         }
+    }
+
+    void ResetJump() {
+        readyToJump = true;
     }
 
     void Look() {
