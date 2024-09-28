@@ -50,6 +50,7 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         Look();
+        Debug.Log("Grounded: " + grounded);
     }
 
     void FixedUpdate() {
@@ -74,7 +75,6 @@ public class PlayerController : MonoBehaviour
     void HandleMovement() {
         float currentSpeed = rb.velocity.magnitude;
         if (currentSpeed > maxSpeed && currentMode == MovementMode.Normal) {
-            Debug.Log("Too fast boiii");
             return;
         }
         
@@ -96,13 +96,13 @@ public class PlayerController : MonoBehaviour
 
         switch (currentMode) {
             case MovementMode.Normal:
-                Vector3 localVelocity = transform.InverseTransformDirection(rb.velocity);
+                Vector3 normLocalVelocity = transform.InverseTransformDirection(rb.velocity);
                 
                 if (Mathf.Abs(Input.GetAxis("Horizontal")) < 0.1f) {
-                    rb.AddRelativeForce(new Vector3(-localVelocity.x * counterMovementMagnitude, 0, 0) * Time.deltaTime, ForceMode.VelocityChange);
+                    rb.AddRelativeForce(new Vector3(-normLocalVelocity.x * counterMovementMagnitude, 0, 0) * Time.deltaTime, ForceMode.VelocityChange);
                 }
                 if (Mathf.Abs(Input.GetAxis("Vertical")) < 0.1f) {
-                    rb.AddRelativeForce(new Vector3(0, 0, -localVelocity.z * counterMovementMagnitude) * Time.deltaTime, ForceMode.VelocityChange);
+                    rb.AddRelativeForce(new Vector3(0, 0, -normLocalVelocity.z * counterMovementMagnitude) * Time.deltaTime, ForceMode.VelocityChange);
                 }
                 
                 
@@ -111,8 +111,14 @@ public class PlayerController : MonoBehaviour
             case MovementMode.Planetry:
                 Vector3 velocityReference = playerOrbital.primaryBody.GetComponent<Rigidbody>().velocity;
                 Vector3 relativeVelocity = rb.velocity - velocityReference;
-                
-                
+                Vector3 planetLocalVelocity = transform.InverseTransformDirection(relativeVelocity);
+
+                if (Mathf.Abs(Input.GetAxis("Horizontal")) < 0.1f) {
+                    rb.AddRelativeForce(new Vector3(-planetLocalVelocity.x * counterMovementMagnitude, 0, 0) * Time.deltaTime, ForceMode.VelocityChange);
+                }
+                if (Mathf.Abs(Input.GetAxis("Vertical")) < 0.1f) {
+                    rb.AddRelativeForce(new Vector3(0, 0, -planetLocalVelocity.z * counterMovementMagnitude) * Time.deltaTime, ForceMode.VelocityChange);
+                }
                 
                 
                 break;
