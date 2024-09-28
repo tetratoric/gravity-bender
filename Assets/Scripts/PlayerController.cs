@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum MovementMode { Normal, Planetry}
+
+[RequireComponent(typeof(OrbitingObject))]
 [RequireComponent(typeof(NewtonianObject))]
 [RequireComponent(typeof(Rigidbody))]
 public class PlayerController : MonoBehaviour
@@ -10,8 +13,9 @@ public class PlayerController : MonoBehaviour
 
     float camX, camY;
 
-    public float movementForce = 10f;
+    public float movementForce = 4500f;
     public float maxSpeed = 20f;
+    public float counterMovementMagnitude = 10f;
     public float jumpForce = 10f;
     public float mouseSensitivity = 100f;
 
@@ -21,13 +25,18 @@ public class PlayerController : MonoBehaviour
     Rigidbody rb;
     Camera playerCamera;
     NewtonianObject playerGravity;
-    
+    OrbitingObject playerOrbital;
+
+    public MovementMode currentMode;
+
     bool grounded;
 
     void Awake() {
         rb = GetComponent<Rigidbody>();
-        playerCamera = GetComponentInChildren<Camera>();
         playerGravity = GetComponent<NewtonianObject>();
+        playerOrbital = GetComponent<OrbitingObject>();
+
+        playerCamera = GetComponentInChildren<Camera>();
     }
     
     void Start()
@@ -45,6 +54,8 @@ public class PlayerController : MonoBehaviour
 
     void FixedUpdate() {
         HandleMovement();
+        HandleCounterMovement();
+        
         HandleJumping();
     }
 
@@ -62,7 +73,7 @@ public class PlayerController : MonoBehaviour
 
     void HandleMovement() {
         float currentSpeed = rb.velocity.magnitude;
-        if (currentSpeed > maxSpeed) {
+        if (currentSpeed > maxSpeed && currentMode == MovementMode.Normal) {
             Debug.Log("Too fast boiii");
             return;
         }
@@ -78,6 +89,34 @@ public class PlayerController : MonoBehaviour
         }
 
         rb.AddRelativeForce(movementDir * movementForce * movementMultipler * airMult * Time.deltaTime);
+    }
+
+    void HandleCounterMovement() {
+        if (!grounded) return;
+
+        switch (currentMode) {
+            case MovementMode.Normal:
+                Vector3 localVelocity = transform.InverseTransformDirection(rb.velocity);
+                
+                if (Mathf.Abs(Input.GetAxis("Horizontal")) < 0.1f) {
+                    rb.AddRelativeForce(new Vector3(-localVelocity.x * counterMovementMagnitude, 0, 0) * Time.deltaTime, ForceMode.VelocityChange);
+                }
+                if (Mathf.Abs(Input.GetAxis("Vertical")) < 0.1f) {
+                    rb.AddRelativeForce(new Vector3(0, 0, -localVelocity.z * counterMovementMagnitude) * Time.deltaTime, ForceMode.VelocityChange);
+                }
+                
+                
+                break;
+            
+            case MovementMode.Planetry:
+                Vector3 velocityReference = playerOrbital.primaryBody.GetComponent<Rigidbody>().velocity;
+                Vector3 relativeVelocity = rb.velocity - velocityReference;
+                
+                
+                
+                
+                break;
+        }
     }
 
     void HandleJumping() {
