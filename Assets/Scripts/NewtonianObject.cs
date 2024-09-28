@@ -11,6 +11,7 @@ public class NewtonianObject : MonoBehaviour
     float G;
 
     public bool attractObjects = false;
+    [HideInInspector]
     public bool active = true;
 
     public static List<NewtonianObject> newtonianObjects;

@@ -10,7 +10,7 @@ public enum MovementMode { Normal, Planetry}
 public class PlayerController : MonoBehaviour
 {
     public MovementMode movementMode;
-    public bool useGravitationalPhysics = false;
+    bool useGravitationalPhysics = false;
 
     float camX, camY;
 
@@ -47,21 +47,26 @@ public class PlayerController : MonoBehaviour
     {
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
-        playerGravity.active = useGravitationalPhysics;
-        rb.useGravity = !useGravitationalPhysics;
+        if (movementMode == MovementMode.Planetry) {
+            playerGravity.active = true;
+            rb.useGravity = false;
+        } else {
+            playerGravity.active = false;
+            rb.useGravity = true;
+        }
     }
 
     void Update()
     {
         Look();
-        CheckIfGrounded();
+        
         Debug.Log("Grounded: " + grounded);
     }
 
     void FixedUpdate() {
         HandleMovement();
         HandleCounterMovement();
-        
+        CheckIfGrounded();
         HandleJumping();
     }
 
@@ -151,7 +156,7 @@ public class PlayerController : MonoBehaviour
     }
 
     void HandleJumping() {
-        if (grounded && readyToJump && Input.GetButtonDown("Jump")) {
+        if (grounded && readyToJump && Input.GetButton("Jump")) {
             readyToJump = false;
             rb.AddForce(transform.up * jumpForce * jumpMultiplier, ForceMode.Impulse);
 
