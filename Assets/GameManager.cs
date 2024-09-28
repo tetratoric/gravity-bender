@@ -6,7 +6,7 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance {get; private set; }
 
-    public static float G = 1f;
+    public static float G = 0.01f;
     
     private void Awake() {
         if (Instance == null) {

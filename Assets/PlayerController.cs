@@ -6,7 +6,7 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody))]
 public class PlayerController : MonoBehaviour
 {
-    public bool useNewtonianPhysics = false;
+    public bool useGravitationalPhysics = false;
 
     float camX, camY;
 
@@ -34,8 +34,8 @@ public class PlayerController : MonoBehaviour
     {
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
-        playerGravity.active = useNewtonianPhysics;
-        rb.useGravity = !useNewtonianPhysics;
+        playerGravity.active = useGravitationalPhysics;
+        rb.useGravity = !useGravitationalPhysics;
     }
 
     void Update()
