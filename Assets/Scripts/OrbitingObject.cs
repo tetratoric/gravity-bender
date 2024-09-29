@@ -7,7 +7,7 @@ using UnityEngine.UIElements;
 [RequireComponent(typeof(NewtonianObject))]
 public class OrbitingObject : MonoBehaviour
 {
-    [HideInInspector]
+    
     public GameObject primaryBody;
     public float rotationDamp = 0.3f;
     

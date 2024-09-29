@@ -166,6 +166,7 @@ Library: lib_burst_generated
 --root-assembly=C:\Users\codys\OneDrive\Documents\GitHub\gravity-bender\Temp\StagingArea\Data\Managed\Unity.Services.Core.Analytics.dll
 --root-assembly=C:\Users\codys\OneDrive\Documents\GitHub\gravity-bender\Temp\StagingArea\Data\Managed\UnityEngine.Purchasing.SecurityCore.dll
 --root-assembly=C:\Users\codys\OneDrive\Documents\GitHub\gravity-bender\Temp\StagingArea\Data\Managed\Unity.ProBuilder.KdTree.dll
+--root-assembly=C:\Users\codys\OneDrive\Documents\GitHub\gravity-bender\Temp\StagingArea\Data\Managed\Assembly-CSharp.dll
 --root-assembly=C:\Users\codys\OneDrive\Documents\GitHub\gravity-bender\Temp\StagingArea\Data\Managed\Purchasing.Common.dll
 --root-assembly=C:\Users\codys\OneDrive\Documents\GitHub\gravity-bender\Temp\StagingArea\Data\Managed\Unity.Services.Core.Threading.dll
 --root-assembly=C:\Users\codys\OneDrive\Documents\GitHub\gravity-bender\Temp\StagingArea\Data\Managed\Unity.Services.Core.Configuration.dll
@@ -178,7 +179,6 @@ Library: lib_burst_generated
 --root-assembly=C:\Users\codys\OneDrive\Documents\GitHub\gravity-bender\Temp\StagingArea\Data\Managed\UnityEngine.Purchasing.AppleMacosStub.dll
 --root-assembly=C:\Users\codys\OneDrive\Documents\GitHub\gravity-bender\Temp\StagingArea\Data\Managed\Unity.ProBuilder.Stl.dll
 --root-assembly=C:\Users\codys\OneDrive\Documents\GitHub\gravity-bender\Temp\StagingArea\Data\Managed\Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary.dll
---root-assembly=C:\Users\codys\OneDrive\Documents\GitHub\gravity-bender\Temp\StagingArea\Data\Managed\Assembly-CSharp.dll
 --root-assembly=C:\Users\codys\OneDrive\Documents\GitHub\gravity-bender\Temp\StagingArea\Data\Managed\UnityEngine.Purchasing.Codeless.dll
 --root-assembly=C:\Users\codys\OneDrive\Documents\GitHub\gravity-bender\Temp\StagingArea\Data\Managed\Unity.RenderPipelines.Core.ShaderLibrary.dll
 --root-assembly=C:\Users\codys\OneDrive\Documents\GitHub\gravity-bender\Temp\StagingArea\Data\Managed\UnityEngine.Purchasing.AppleStub.dll
@@ -365,6 +365,7 @@ Library: lib_burst_generated
 --root-assembly=C:\Users\codys\OneDrive\Documents\GitHub\gravity-bender\Temp\StagingArea\Data\Managed\Unity.Services.Core.Analytics.dll
 --root-assembly=C:\Users\codys\OneDrive\Documents\GitHub\gravity-bender\Temp\StagingArea\Data\Managed\UnityEngine.Purchasing.SecurityCore.dll
 --root-assembly=C:\Users\codys\OneDrive\Documents\GitHub\gravity-bender\Temp\StagingArea\Data\Managed\Unity.ProBuilder.KdTree.dll
+--root-assembly=C:\Users\codys\OneDrive\Documents\GitHub\gravity-bender\Temp\StagingArea\Data\Managed\Assembly-CSharp.dll
 --root-assembly=C:\Users\codys\OneDrive\Documents\GitHub\gravity-bender\Temp\StagingArea\Data\Managed\Purchasing.Common.dll
 --root-assembly=C:\Users\codys\OneDrive\Documents\GitHub\gravity-bender\Temp\StagingArea\Data\Managed\Unity.Services.Core.Threading.dll
 --root-assembly=C:\Users\codys\OneDrive\Documents\GitHub\gravity-bender\Temp\StagingArea\Data\Managed\Unity.Services.Core.Configuration.dll
@@ -377,7 +378,6 @@ Library: lib_burst_generated
 --root-assembly=C:\Users\codys\OneDrive\Documents\GitHub\gravity-bender\Temp\StagingArea\Data\Managed\UnityEngine.Purchasing.AppleMacosStub.dll
 --root-assembly=C:\Users\codys\OneDrive\Documents\GitHub\gravity-bender\Temp\StagingArea\Data\Managed\Unity.ProBuilder.Stl.dll
 --root-assembly=C:\Users\codys\OneDrive\Documents\GitHub\gravity-bender\Temp\StagingArea\Data\Managed\Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary.dll
---root-assembly=C:\Users\codys\OneDrive\Documents\GitHub\gravity-bender\Temp\StagingArea\Data\Managed\Assembly-CSharp.dll
 --root-assembly=C:\Users\codys\OneDrive\Documents\GitHub\gravity-bender\Temp\StagingArea\Data\Managed\UnityEngine.Purchasing.Codeless.dll
 --root-assembly=C:\Users\codys\OneDrive\Documents\GitHub\gravity-bender\Temp\StagingArea\Data\Managed\Unity.RenderPipelines.Core.ShaderLibrary.dll
 --root-assembly=C:\Users\codys\OneDrive\Documents\GitHub\gravity-bender\Temp\StagingArea\Data\Managed\UnityEngine.Purchasing.AppleStub.dll

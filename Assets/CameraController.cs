@@ -6,7 +6,7 @@ public class CameraController : MonoBehaviour
 {
     public Transform cameraPivot;
 
-    void LateUpdate() {
+    public void SyncAttributes() {
         transform.position = cameraPivot.position;
         transform.rotation = cameraPivot.rotation;
     }
