@@ -10,7 +10,6 @@ public enum MovementMode { Normal, Planetry}
 public class PlayerController : MonoBehaviour
 {
     public MovementMode movementMode;
-    bool useGravitationalPhysics = false;
 
     float camX, camY;
 
@@ -28,7 +27,7 @@ public class PlayerController : MonoBehaviour
     private float jumpMultiplier = 10f;
 
     Rigidbody rb;
-    Camera playerCamera;
+    public Transform cameraPivot;
     NewtonianObject playerGravity;
     OrbitingObject playerOrbital;
 
@@ -40,7 +39,6 @@ public class PlayerController : MonoBehaviour
         playerGravity = GetComponent<NewtonianObject>();
         playerOrbital = GetComponent<OrbitingObject>();
 
-        playerCamera = GetComponentInChildren<Camera>();
     }
     
     void Start()
@@ -173,7 +171,7 @@ public class PlayerController : MonoBehaviour
         camX = Mathf.Clamp(camX, -90f, 90f);
         camY = Input.GetAxis("Mouse X") * mouseSensitivity * Time.fixedDeltaTime;
 
-        playerCamera.transform.localRotation = Quaternion.Euler(camX, 0, 0);
+        cameraPivot.transform.localRotation = Quaternion.Euler(camX, 0, 0);
 
         transform.Rotate(0, camY, 0);
     }
