@@ -31,8 +31,11 @@ public class PlayerController : MonoBehaviour
     NewtonianObject playerGravity;
     OrbitingObject playerOrbital;
 
-
     bool grounded, readyToJump = true;
+
+    float x, y;
+    bool jumping;
+
 
     void Awake() {
         rb = GetComponent<Rigidbody>();
@@ -56,18 +59,26 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        Look();
+        MyInput();
         
         Debug.Log("Grounded: " + grounded);
     }
 
     void FixedUpdate() {
         HandleMovement();
-        HandleCounterMovement();
         CheckIfGrounded();
-        HandleJumping();
     }
 
+    void LateUpdate() {
+        Look();
+    }
+
+    void MyInput() {
+        x = Input.GetAxis("Horizontal");
+        y = Input.GetAxis("Vertical");
+        
+        jumping = Input.GetButton("Jump");
+    }
 
     void CheckIfGrounded() {
         RaycastHit hit;
@@ -105,11 +116,12 @@ public class PlayerController : MonoBehaviour
         if (currentSpeed > maxSpeed && movementMode == MovementMode.Normal) {
             return;
         }
-        
-        float x = Input.GetAxis("Horizontal");
-        float y = Input.GetAxis("Vertical");
 
         Vector3 movementDir = new Vector3(x, 0.0f, y).normalized;
+
+        HandleCounterMovement();
+
+        if (readyToJump && jumping) HandleJumping();
         
         float airMult = 1;
         if (!grounded) {
@@ -154,7 +166,7 @@ public class PlayerController : MonoBehaviour
     }
 
     void HandleJumping() {
-        if (grounded && readyToJump && Input.GetButton("Jump")) {
+        if (grounded && readyToJump) {
             readyToJump = false;
             rb.AddForce(transform.up * jumpForce * jumpMultiplier, ForceMode.Impulse);
 
