@@ -18,6 +18,7 @@ public class PlayerController : MonoBehaviour
     public float counterMovementMagnitude = 10f;
     public float jumpForce = 10f;
     public float jumpCooldown = 0.25f;
+    public float inclineAngle = 35f;
     public float groundingRaycastDistance = 1.55f;
     public LayerMask groundLayer;
 
@@ -81,6 +82,9 @@ public class PlayerController : MonoBehaviour
     }
 
     void CheckIfGrounded() {
+        // TODO: update to be grouned on slopes less than the incline angle. Use a hitbox cast to have a wider range of area to check
+        // sphere cast is one option
+        
         RaycastHit hit;
 
         Vector3 rayDirection;

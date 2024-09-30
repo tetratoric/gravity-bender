@@ -18,9 +18,8 @@ public class OrbitingObject : MonoBehaviour
     }
 
     void Rotate() {
-        Quaternion target = Quaternion.Euler(Vector3.zero);
         Vector3 targetDirection = (transform.position - primaryBody.transform.position).normalized;
-        target = Quaternion.FromToRotation(transform.up, targetDirection) * transform.rotation;
+        Quaternion target = Quaternion.FromToRotation(transform.up, targetDirection) * transform.rotation;
 
         transform.localRotation = Quaternion.Slerp(transform.localRotation, target, rotationDamp/10);
     }
