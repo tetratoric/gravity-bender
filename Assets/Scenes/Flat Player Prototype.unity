@@ -123,6 +123,18 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!114 &132293179 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 636695445859466554, guid: 713e08ba804918142aab3acd9cb9b71b,
+    type: 3}
+  m_PrefabInstance: {fileID: 6620195428885999427}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b423633bec5b004eba3f14f21e41d8f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &525351133
 GameObject:
   m_ObjectHideFlags: 0
@@ -499,6 +511,12 @@ Mesh:
     offset: 0
     size: 0
     path: 
+--- !u!4 &634853445 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6620195428026881049, guid: 713e08ba804918142aab3acd9cb9b71b,
+    type: 3}
+  m_PrefabInstance: {fileID: 6620195428885999427}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &919902548
 GameObject:
   m_ObjectHideFlags: 0
@@ -2329,10 +2347,40 @@ PrefabInstance:
       propertyPath: m_RenderPostProcessing
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 7418389668944071696, guid: 713e08ba804918142aab3acd9cb9b71b,
+        type: 3}
+      propertyPath: m_CollisionDetection
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7418389668944071697, guid: 713e08ba804918142aab3acd9cb9b71b,
         type: 3}
       propertyPath: jumpForce
       value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 7418389668944071697, guid: 713e08ba804918142aab3acd9cb9b71b,
+        type: 3}
+      propertyPath: cameraPivot
+      value: 
+      objectReference: {fileID: 634853445}
+    - target: {fileID: 7418389668944071697, guid: 713e08ba804918142aab3acd9cb9b71b,
+        type: 3}
+      propertyPath: cameraController
+      value: 
+      objectReference: {fileID: 132293179}
+    - target: {fileID: 7418389668944071697, guid: 713e08ba804918142aab3acd9cb9b71b,
+        type: 3}
+      propertyPath: mouseSensitivity
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7418389668944071710, guid: 713e08ba804918142aab3acd9cb9b71b,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7418389668944071711, guid: 713e08ba804918142aab3acd9cb9b71b,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 713e08ba804918142aab3acd9cb9b71b, type: 3}

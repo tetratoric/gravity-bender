@@ -29,6 +29,7 @@ public class PlayerController : MonoBehaviour
 
     Rigidbody rb;
     public Transform cameraPivot;
+    public CameraController cameraController;
     NewtonianObject playerGravity;
     OrbitingObject playerOrbital;
 
@@ -61,7 +62,7 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         MyInput();
-        
+        Look();
         Debug.Log("Grounded: " + grounded);
     }
 
@@ -71,7 +72,7 @@ public class PlayerController : MonoBehaviour
     }
 
     void LateUpdate() {
-        Look();
+        
     }
 
     void MyInput() {
@@ -99,21 +100,7 @@ public class PlayerController : MonoBehaviour
         } else {
             grounded = false;
         }
-
-        Debug.DrawRay(transform.position, rayDirection * groundingRaycastDistance, Color.red);
     }
-
-    // void OnCollisionStay(Collision other) {
-    //     if (other.gameObject.layer == LayerMask.NameToLayer("Environment")) {
-    //         grounded = true;
-    //     }
-    // }
-
-    // void OnCollisionExit(Collision other) {
-    //     if (other.gameObject.layer == LayerMask.NameToLayer("Environment")) {
-    //         grounded = false;
-    //     }
-    // }
 
     void HandleMovement() {
         float currentSpeed = rb.velocity.magnitude;
@@ -142,10 +129,10 @@ public class PlayerController : MonoBehaviour
             case MovementMode.Normal:
                 Vector3 normLocalVelocity = transform.InverseTransformDirection(rb.velocity);
                 
-                if (Mathf.Abs(Input.GetAxis("Horizontal")) < 0.1f) {
+                if (Mathf.Abs(x) < 0.1f) {
                     rb.AddRelativeForce(new Vector3(-normLocalVelocity.x * counterMovementMagnitude, 0, 0) * Time.deltaTime, ForceMode.VelocityChange);
                 }
-                if (Mathf.Abs(Input.GetAxis("Vertical")) < 0.1f) {
+                if (Mathf.Abs(y) < 0.1f) {
                     rb.AddRelativeForce(new Vector3(0, 0, -normLocalVelocity.z * counterMovementMagnitude) * Time.deltaTime, ForceMode.VelocityChange);
                 }
                 
@@ -157,10 +144,10 @@ public class PlayerController : MonoBehaviour
                 Vector3 relativeVelocity = rb.velocity - velocityReference;
                 Vector3 planetLocalVelocity = transform.InverseTransformDirection(relativeVelocity);
 
-                if (Mathf.Abs(Input.GetAxis("Horizontal")) < 0.1f) {
+                if (Mathf.Abs(x) < 0.1f) {
                     rb.AddRelativeForce(new Vector3(-planetLocalVelocity.x * counterMovementMagnitude, 0, 0) * Time.deltaTime, ForceMode.VelocityChange);
                 }
-                if (Mathf.Abs(Input.GetAxis("Vertical")) < 0.1f) {
+                if (Mathf.Abs(y) < 0.1f) {
                     rb.AddRelativeForce(new Vector3(0, 0, -planetLocalVelocity.z * counterMovementMagnitude) * Time.deltaTime, ForceMode.VelocityChange);
                 }
                 
@@ -183,12 +170,18 @@ public class PlayerController : MonoBehaviour
     }
 
     void Look() {
-        camX -= Input.GetAxis("Mouse Y") * mouseSensitivity * Time.fixedDeltaTime;
+        camX -= Input.GetAxis("Mouse Y") * mouseSensitivity;
         camX = Mathf.Clamp(camX, -90f, 90f);
-        camY = Input.GetAxis("Mouse X") * mouseSensitivity * Time.fixedDeltaTime;
+        camY = Input.GetAxis("Mouse X") * mouseSensitivity;
 
         cameraPivot.transform.localRotation = Quaternion.Euler(camX, 0, 0);
 
+        // Quaternion currentRotation = rb.rotation;
+        // Quaternion newRotation = currentRotation * Quaternion.Euler(0, camY, 0);
+        // rb.MoveRotation(newRotation);
+
         transform.Rotate(0, camY, 0);
+
+        cameraController.SyncAttributes();
     }
 }
